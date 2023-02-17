@@ -171,9 +171,11 @@ export default new Vuex.Store({
         },
         setActiveMetric: (state, metric) => {
             state.activeMetric = metric;
+            state.expandedCompanyNames = [];
         },
         setFilterInput: (state, value) => {
             state.filterInput = value;
+            state.expandedCompanyNames = [];
         },
         setOrderBy(state, field) {
             state.orderBy.field = field;
