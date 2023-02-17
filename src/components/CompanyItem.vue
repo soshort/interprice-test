@@ -7,7 +7,7 @@
                     class="btn btn-expand d-inline-flex align-items-center"
                     v-if="company.hasHiddenData"
                     v-bind:class="getExpandButtonClasses()"
-                    v-on:click="expandRow"/>
+                    v-on:click="toggleRow()"/>
             </td>
             <td>{{ formatDate(company.dateSent) }}</td>
             <td v-if="hasData">
@@ -29,7 +29,7 @@
                 </td>
             </template>
         </tr>
-        <template v-if="isExpanded">
+        <template v-if="isRowExpanded(company.name)">
             <tr
                 class="border-bottom"
                 v-for="(metric, idx) in disabledMetrics"
@@ -58,11 +58,6 @@ export default {
     props: {
         company: Object,
     },
-    data() {
-        return {
-            isExpanded: false,
-        }
-    },
     computed: {
         ...mapGetters([
             'activeYears',
@@ -70,6 +65,7 @@ export default {
             'disabledMetrics',
             'activeCurrency',
             'minValueKeys',
+            'expandedCompanyNames'
         ]),
         hasData() {
             return Object.keys(this.company.data).length > 0;
@@ -77,7 +73,10 @@ export default {
     },
     methods: {
         getExpandButtonClasses() {
-            return { expanded: this.isExpanded };
+            return { expanded: this.isRowExpanded(this.company.name) };
+        },
+        isRowExpanded() {
+            return this.expandedCompanyNames.includes(this.company.name);
         },
         getCellValue(years, couponType, metric) {
             const key = this.activeCurrency + '-' + years + '-' + couponType + '-' + (metric ?? this.activeMetric);
@@ -89,8 +88,8 @@ export default {
                 'bg-warning bg-opacity-25': this.company.data[key] && this.minValueKeys[key] === this.company.data[key]
             }
         },
-        expandRow() {
-            this.isExpanded = ! this.isExpanded;
+        toggleRow() {
+            this.$store.commit('toggleRow', this.company.name)
         },
         formatDate(date) {
             return date ? moment(date).format('DD-MMM-YY') : '';

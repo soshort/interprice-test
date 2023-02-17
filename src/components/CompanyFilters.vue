@@ -63,19 +63,17 @@ export default {
             'activeCurrency',
             'activeYears',
             'activeMetric',
-            'averages',
-            'filterInput',
-            'orderBy'
+            'filterInput'
         ])
     },
     methods: {
         ...mapMutations([
-            'setOrderBy',
             'setActiveMetric',
             'toggleActivePeriod'
         ]),
         filterInputChange(event) {
             this.$store.commit('setFilterInput', event.target.value);
+            this.$store.commit('collapseAllRows');
         },
         setActiveCurrency(currency) {
             this.$store.commit('setActiveCurrency', currency);
