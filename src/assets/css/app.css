@@ -1,0 +1,29 @@
+.table td {
+    vertical-align: middle;
+}
+
+table tr {
+    height: 2em;
+}
+
+.btn.btn-order {
+    padding: 0;
+}
+
+.btn.btn-order::after {
+    content: "▲";
+    width: 1.75em;
+    line-height: 0;
+}
+
+.btn.btn-order.asc::after {
+    content: "▲";
+}
+
+.btn.btn-order.desc::after {
+    content: "▼";
+}
+
+.btn.btn-order.active::after {
+    color: #000;
+}
