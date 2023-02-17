@@ -14,6 +14,7 @@ export default new Vuex.Store({
         activeMetric: 'Spread',
         filterInput: null,
         orderBy: {field: 'dateSent', direction: 'desc'},
+        expandedCompanyNames: [],
     },
     getters: {
         filterInput: state => {
@@ -71,6 +72,7 @@ export default new Vuex.Store({
                     quotes: item.Quote,
                     data: {},
                     hasHiddenData: false,
+                    isExpanded: false,
                 };
 
                 item.Quote?.forEach(quote => {
@@ -146,6 +148,9 @@ export default new Vuex.Store({
 
             return averages;
         },
+        expandedCompanyNames: state => {
+            return state.expandedCompanyNames;
+        }
     },
     mutations: {
         setItems: (state, items) => {
@@ -173,6 +178,16 @@ export default new Vuex.Store({
         setOrderBy(state, field) {
             state.orderBy.field = field;
             state.orderBy.direction = state.orderBy.direction === 'asc' ? 'desc' : 'asc';
+        },
+        toggleRow(state, name) {
+            if (state.expandedCompanyNames.includes(name)) {
+                state.expandedCompanyNames.splice(state.expandedCompanyNames.indexOf(name), 1);
+            } else {
+                state.expandedCompanyNames.push(name);
+            }
+        },
+        collapseAllRows(state) {
+            state.expandedCompanyNames = [];
         }
     },
     actions: {},
