@@ -73,7 +73,6 @@ export default {
         ]),
         filterInputChange(event) {
             this.$store.commit('setFilterInput', event.target.value);
-            this.$store.commit('collapseAllRows');
         },
         setActiveCurrency(currency) {
             this.$store.commit('setActiveCurrency', currency);

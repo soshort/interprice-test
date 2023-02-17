@@ -158,6 +158,7 @@ export default new Vuex.Store({
         },
         setActiveCurrency: (state, currency) => {
             state.activeCurrency = currency;
+            state.expandedCompanyNames = [];
         },
         setActiveYears: (state, years) => {
             state.activeYears = years;
@@ -171,9 +172,11 @@ export default new Vuex.Store({
         },
         setActiveMetric: (state, metric) => {
             state.activeMetric = metric;
+            state.expandedCompanyNames = [];
         },
         setFilterInput: (state, value) => {
             state.filterInput = value;
+            state.expandedCompanyNames = [];
         },
         setOrderBy(state, field) {
             state.orderBy.field = field;
